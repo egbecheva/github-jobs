@@ -8,10 +8,14 @@
 }
 
 .gh-jobs-search-bar{
-  width: 60%;
+  width: 50%;
   background-color: white;
   border-radius: 6px;
-
 }
 
+.gh-jobs-title{
+  padding: 4px 0px;
+  font-weight:normal;
+  color:#282538;
+}
 

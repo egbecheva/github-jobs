@@ -1,13 +1,38 @@
 import './style.css';
-import { TextField } from '@mui/material';
+import { Button, Paper, InputBase} from '@mui/material';
+import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
+import { styled } from '@mui/material/styles';
+
+
+
+const SearchButton = () => (
+  <StyledSearchButton variant="contained">
+    Search
+  </StyledSearchButton>
+  )
+
+const StyledSearchButton = styled(Button)({
+  boxShadow: "none",
+  backgroundColor:"#1E86FF",
+  minWidth: "170px",
+  minHeight: "60px"
+  });
 
 
 const SearchBar = () => {
   return (
-    <TextField
-    label="Title, companies, expertise or benefits"
-    className="gh-jobs-search-bar">
-    </TextField>
+    <Paper
+      component="form"
+      sx={{ p: '5px 5px', display: 'flex', alignItems: 'center', width: "60%", minHeight: "60px" }}
+    >
+      <WorkOutlineIcon sx={{ m: '4px 10px'}} style={{color:"#B9BDCF"}}/>
+      <InputBase
+        sx={{  flex: 1 }}
+        placeholder="Title, companies, expertise or benefits"
+        inputProps={{ 'aria-label': 'search google maps' }}
+      />
+      <SearchButton/>
+    </Paper>
   );
 }
 

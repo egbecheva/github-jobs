@@ -1,8 +1,10 @@
 import React from 'react';
 import './style.css';
-import { Grid, Paper, Box, TextField  } from '@mui/material';
+import { Grid, Paper, Box  } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import SearchBar from "./SearchBar"
+// import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -12,10 +14,18 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+// const theme = createMuiTheme({
+//   typography: {
+//     fontFamily: [
+//       'Poppins',
+//     ].join(','),
+//   },});
+
 function App() {
   return (
     <div>
-      <Box m={10} pt={7}>
+      <Box mx={20}>
+      <h1 className="gh-jobs-title"><strong>Github</strong> Jobs</h1>
         <Grid  container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={12} md={12}>
             <Item className="gh-jobs-header">
