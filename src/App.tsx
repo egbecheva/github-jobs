@@ -1,9 +1,13 @@
 import React from 'react';
 import './style.css';
-import { Grid, Paper, Box  } from '@mui/material';
+import { Grid, Paper, Box,InputBase } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import SearchBar from "./SearchBar"
-// import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import PublicIcon from '@mui/icons-material/Public';
+
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -14,12 +18,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-// const theme = createMuiTheme({
-//   typography: {
-//     fontFamily: [
-//       'Poppins',
-//     ].join(','),
-//   },});
+
 
 function App() {
   return (
@@ -33,7 +32,22 @@ function App() {
             </Item>
           </Grid>
           <Grid item xs={12} md={4}>
-            <Item>2</Item>
+            <FormGroup>
+              <FormControlLabel control={<Checkbox />} label="Full time" />
+          </FormGroup>
+          <div style={{color:"#B9BDCF",fontWeight:"bold",fontSize:"15px", marginBottom:"2px"}}>
+            LOCATION
+          </div>
+          <Paper
+            component="form"
+            sx={{ p: '5px 5px', display: 'flex', alignItems: 'center', width: "60%", minHeight: "60px" }}
+          >
+            <PublicIcon sx={{ m: '4px 10px'}} style={{color:"#B9BDCF"}}/>
+            <InputBase
+              sx={{  flex: 1 }}
+              placeholder="City, state, zip code or country"
+            />
+          </Paper>
           </Grid>
           <Grid item xs={12} md={8}>
             <Item>3</Item>
