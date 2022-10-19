@@ -28,7 +28,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <div>
         <Box mx={20}>
-        <h1 className="gh-jobs-title"><strong>Github</strong> Jobs</h1>
+        <h1 className="gh-jobs-title"><strong>Remote</strong> Jobs</h1>
           <Grid  container rowSpacing={2}>
             <Grid item xs={12} md={12}>
               <Item className="gh-jobs-header">
@@ -59,7 +59,7 @@ function App() {
           </Grid>
         </Box>
       </div>
-    <ReactQueryDevtools initialIsOpen={true} />
+    <ReactQueryDevtools />
   </QueryClientProvider>
   );
 }
