@@ -6,12 +6,15 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';  
-import { useQueryClient, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import PaginationRounded from './PaginationRounded'
 
+const fetchJobs = async () => {
+  const response = await fetch("https://remotive.com/api/remote-jobs")
+  return response.json()
+}
 
 
 
@@ -33,10 +36,6 @@ function JobList() {
   }
 
 
-  const fetchJobs = useCallback(async () => {
-    const response = await fetch("https://remotive.com/api/remote-jobs")
-    return response.json()
-  },[])
 
 
   // const queryClient = useQueryClient()
@@ -54,12 +53,40 @@ function JobList() {
  
 
 
-
   return (
     <div>
       {status === "error" && <p>Error fetching data</p>}
       {status === "loading" && <p>Fetching data...</p>}
-      
+      {status === "success" && _DATA?.currentData()
+      .map(({company_logo,title,company_name,publication_date,candidate_required_location,job_type}:SingleJob,id:number) => 
+        <div key={id} style={{margin:"2px"}}>
+        <Card sx={{ display: 'flex' }}>
+          <CardMedia
+            component="img"
+            sx={{ width: 151 }}
+            image={company_logo}
+            alt="Live from space album cover"
+          />
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <CardContent sx={{ flex: '1 0 auto' }}>
+              <Typography component="div" variant="h5">
+                {title}
+              </Typography>
+              <Typography variant="subtitle1" color="text.secondary" component="div">
+                {company_name}
+              </Typography>
+            </CardContent>
+            <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
+                <Chip label={job_type} variant="outlined" />
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'right', pl: 1, pb: 1 }}>
+              <div>{publication_date}</div>
+              <div>{candidate_required_location}</div>
+            </Box>
+          </Box>
+        </Card>
+      </div>
+      )}
       <PaginationRounded
         count={count}
         size="large"
@@ -68,40 +95,6 @@ function JobList() {
         shape="rounded"
         onChange={handleChange}
       />
-
-        <ul>
-          {status === "success" && _DATA?.currentData().map((job:any,id:number) => 
-            <div key={id} style={{margin:"2px"}}>
-            <Card sx={{ display: 'flex' }}>
-          <CardMedia
-            component="img"
-            sx={{ width: 151 }}
-            image={job.company_logo}
-            alt="Live from space album cover"
-          />
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <CardContent sx={{ flex: '1 0 auto' }}>
-            <Typography component="div" variant="h5">
-              {job.title}
-            </Typography>
-            <Typography variant="subtitle1" color="text.secondary" component="div">
-              {job.company_name}
-            </Typography>
-          </CardContent>
-          <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
-              <Chip label={job.job_type} variant="outlined" />
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'right', pl: 1, pb: 1 }}>
-            <div>{job.publication_date}</div>
-            <div>{job.candidate_required_location}</div>
-          </Box>
-        </Box>
-  
-      </Card>
-          </div>
-
-          )}
-        </ul>
     </div>
   );
 }
