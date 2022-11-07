@@ -56,44 +56,19 @@ const JobList: React.FC<{onlyFullTimeJobsVisible:string}> = ({onlyFullTimeJobsVi
     _DATA.jump(p);
   };
 
+  let results = _DATA?.currentData() || [];
   
+  if (onlyFullTimeJobsVisible==='true') {
+    results = results.filter(({job_type}:SingleJob)=>job_type==="full_time")
+  } 
 
   return (
     <div>
       {status === "error" && <p>Error fetching data</p>}
       {status === "loading" && <p>Fetching data...</p>}
-      {status === "success" && onlyFullTimeJobsVisible==='true' ? _DATA?.currentData()
-
-      .filter(({job_type}:SingleJob)=>job_type==="full_time")
-      .map(({company_logo,title,company_name,publication_date,candidate_required_location,job_type}:SingleJob,id:number) => 
-        <div key={id} style={{margin:"2px"}}>
-        <Card sx={{ display: 'flex' }}>
-          <CardMedia
-            component="img"
-            sx={{ width: 151 }}
-            image={company_logo}
-            alt="Live from space album cover"
-          />
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <CardContent sx={{ flex: '1 0 auto' }}>
-              <Typography component="div" variant="h5">
-                {title}
-              </Typography>
-              <Typography variant="subtitle1" color="text.secondary" component="div">
-                {company_name}
-              </Typography>
-            </CardContent>
-            <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
-                <Chip label={job_type} variant="outlined" />
-            </Box>
-            <Box sx={{ display: 'flex', alignItems: 'right', pl: 1, pb: 1 }}>
-              <div>{publication_date}</div>
-              <div>{candidate_required_location}</div>
-            </Box>
-          </Box>
-        </Card>
-      </div>
-      ):null}
+      {status === "success" && results.map((job:SingleJob) => 
+        <JobCard jobDetails={job} />
+      )}
       <PaginationRounded
         count={count}
         size="large"
@@ -104,6 +79,49 @@ const JobList: React.FC<{onlyFullTimeJobsVisible:string}> = ({onlyFullTimeJobsVi
       />
     </div>
   );
+
+  interface OwnProps {
+    jobDetails: SingleJob
+  }
+
+  function JobCard(props:OwnProps) {
+    const {
+      id, 
+      company_logo,
+      title,
+      company_name,
+      publication_date,
+      candidate_required_location,
+      job_type
+    } = props.jobDetails;
+    
+    return <div key={id} style={{ margin: "2px" }}>
+      <Card sx={{ display: 'flex' }}>
+        <CardMedia
+          component="img"
+          sx={{ width: 151 }}
+          image={company_logo}
+          alt="Live from space album cover" />
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <CardContent sx={{ flex: '1 0 auto' }}>
+            <Typography component="div" variant="h5">
+              {title}
+            </Typography>
+            <Typography variant="subtitle1" color="text.secondary" component="div">
+              {company_name}
+            </Typography>
+          </CardContent>
+          <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
+            <Chip label={job_type} variant="outlined" />
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'right', pl: 1, pb: 1 }}>
+            <div>{publication_date}</div>
+            <div>{candidate_required_location}</div>
+          </Box>
+        </Box>
+      </Card>
+    </div>;
+  }
 }
 
 export default JobList;
