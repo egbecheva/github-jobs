@@ -8,19 +8,21 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';  
-import { useQuery } from '@tanstack/react-query'
+import { useQuery,useQueryClient } from '@tanstack/react-query'
 import PaginationRounded from './PaginationRounded'
 
-const fetchJobs = async () => {
-  const response = await fetch("https://remotive.com/api/remote-jobs")
-  return response.json()
-}
 
 
 
-function JobList() {
 
-  interface SingleJob {
+const JobList: React.FC<{onlyFullTimeJobsVisible:string}> = ({onlyFullTimeJobsVisible}) => {
+
+  useEffect(()=>{
+    console.log(onlyFullTimeJobsVisible)
+  },[onlyFullTimeJobsVisible])
+    
+
+  type SingleJob = {
     candidate_required_location: string;
     category: string;
     company_logo: string;
@@ -35,11 +37,14 @@ function JobList() {
     url:string
   }
 
+  const fetchJobs = async () => {
+    const response = await fetch("https://remotive.com/api/remote-jobs")
+    return response.json()
+  }
 
 
-
-  // const queryClient = useQueryClient()
-  const { data, status } = useQuery(["jobs"], fetchJobs);
+  const queryClient = useQueryClient()
+  const { data, status } = useQuery(["jobs"], fetchJobs );
   let [page, setPage] = useState(1);
   const PER_PAGE = 10;
 
@@ -50,14 +55,16 @@ function JobList() {
     setPage(p);
     _DATA.jump(p);
   };
- 
 
+  
 
   return (
     <div>
       {status === "error" && <p>Error fetching data</p>}
       {status === "loading" && <p>Fetching data...</p>}
-      {status === "success" && _DATA?.currentData()
+      {status === "success" && onlyFullTimeJobsVisible==='true' ? _DATA?.currentData()
+
+      .filter(({job_type}:SingleJob)=>job_type==="full_time")
       .map(({company_logo,title,company_name,publication_date,candidate_required_location,job_type}:SingleJob,id:number) => 
         <div key={id} style={{margin:"2px"}}>
         <Card sx={{ display: 'flex' }}>
@@ -86,7 +93,7 @@ function JobList() {
           </Box>
         </Card>
       </div>
-      )}
+      ):null}
       <PaginationRounded
         count={count}
         size="large"
