@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 
-function usePagination(data:any, itemsPerPage:any) {
+function usePagination(data:any, itemsPerPage:number, country:string | undefined) {
   const [currentPage, setCurrentPage] = useState(1);
-  const maxPage = Math.ceil(data?.length / itemsPerPage);
+  let filteredCountryResults:any
+  country ? filteredCountryResults = data.filter((e:any)=>e.candidate_required_location===country) : filteredCountryResults = data
+  const maxPage = Math.ceil(filteredCountryResults?.length > itemsPerPage
+     ? filteredCountryResults?.length / itemsPerPage
+     : 1) ;
+  
+
 
   function currentData() {
     const begin = (currentPage - 1) * itemsPerPage;
     const end = begin + itemsPerPage;
-    return data?.slice(begin, end);
+    return filteredCountryResults?.slice(begin, end);
   }
 
   function next() {
@@ -23,7 +29,7 @@ function usePagination(data:any, itemsPerPage:any) {
     setCurrentPage(currentPage => Math.min(pageNumber, maxPage));
   }
 
-  return { next, prev, jump, currentData, currentPage, maxPage };
+  return { next, prev, jump, currentData, currentPage, maxPage,filteredCountryResults };
 }
 
 export default usePagination;

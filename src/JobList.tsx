@@ -1,5 +1,5 @@
 import React from 'react';
-import {  useState, useEffect, useCallback } from 'react';
+import {  useState, useEffect } from 'react';
 import  usePagination  from './Pagination'
 
 import Box from '@mui/material/Box';  
@@ -15,13 +15,9 @@ import PaginationRounded from './PaginationRounded'
 
 
 
-const JobList: React.FC<{onlyFullTimeJobsVisible:string}> = ({onlyFullTimeJobsVisible}) => {
+const JobList: React.FC<{onlyFullTimeJobsVisible:string,country:string}> = ({onlyFullTimeJobsVisible,country}) => {
 
-  useEffect(()=>{
-    console.log(onlyFullTimeJobsVisible)
-  },[onlyFullTimeJobsVisible])
-    
-
+  
   type SingleJob = {
     candidate_required_location: string;
     category: string;
@@ -37,27 +33,31 @@ const JobList: React.FC<{onlyFullTimeJobsVisible:string}> = ({onlyFullTimeJobsVi
     url:string
   }
 
+  useEffect(()=>{
+    setPage(1);
+    _DATA.jump(1);
+  },[country,onlyFullTimeJobsVisible])
+  
   const fetchJobs = async () => {
     const response = await fetch("https://remotive.com/api/remote-jobs")
     return response.json()
   }
-
-
+  
   const queryClient = useQueryClient()
   const { data, status } = useQuery(["jobs"], fetchJobs );
   let [page, setPage] = useState(1);
-  const PER_PAGE = 10;
-
-  const count = Math.ceil(data?.jobs?.length / PER_PAGE);
-  const _DATA = usePagination(data?.jobs, PER_PAGE);
-
+  const PER_PAGE:number = 10;
+  
+  
+  
+  const _DATA = usePagination(data?.jobs, PER_PAGE,country);
   const handleChange = (e:any, p:any) => {
     setPage(p);
     _DATA.jump(p);
   };
-
-  let results = _DATA?.currentData() || [];
+  const maxPages:number = _DATA?.maxPage
   
+  let results = _DATA?.currentData() || [];
   if (onlyFullTimeJobsVisible==='true') {
     results = results.filter(({job_type}:SingleJob)=>job_type==="full_time")
   } 
@@ -70,7 +70,7 @@ const JobList: React.FC<{onlyFullTimeJobsVisible:string}> = ({onlyFullTimeJobsVi
         <JobCard jobDetails={job} />
       )}
       <PaginationRounded
-        count={count}
+        count={maxPages}
         size="large"
         page={page}
         variant="outlined"
