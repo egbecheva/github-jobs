@@ -15,7 +15,8 @@ import PaginationRounded from './PaginationRounded'
 
 
 
-const JobList: React.FC<{onlyFullTimeJobsVisible:string,country:string}> = ({onlyFullTimeJobsVisible,country}) => {
+
+const JobList: React.FC<{onlyFullTimeJobsVisible:string,country:string,mainSearchBarQuery:string}> = ({onlyFullTimeJobsVisible,country,mainSearchBarQuery}) => {
 
   
   type SingleJob = {
@@ -32,36 +33,33 @@ const JobList: React.FC<{onlyFullTimeJobsVisible:string,country:string}> = ({onl
     title:string;
     url:string
   }
-
-  useEffect(()=>{
-    setPage(1);
-    _DATA.jump(1);
-  },[country,onlyFullTimeJobsVisible])
+  const queryClient = useQueryClient()
+  let [page, setPage] = useState(1);
+  const PER_PAGE:number = 10;
   
   const fetchJobs = async () => {
     const response = await fetch("https://remotive.com/api/remote-jobs")
     return response.json()
   }
-  
-  const queryClient = useQueryClient()
   const { data, status } = useQuery(["jobs"], fetchJobs );
-  let [page, setPage] = useState(1);
-  const PER_PAGE:number = 10;
+  const _DATA = usePagination(data?.jobs,PER_PAGE,country,mainSearchBarQuery,onlyFullTimeJobsVisible);
+
+  useEffect(()=>{
+    setPage(1);
+    _DATA?.jump(1);
+  },[country,onlyFullTimeJobsVisible])
   
-  
-  
-  const _DATA = usePagination(data?.jobs, PER_PAGE,country);
+
   const handleChange = (e:any, p:any) => {
     setPage(p);
-    _DATA.jump(p);
+    _DATA?.jump(p)
   };
-  const maxPages:number = _DATA?.maxPage
-  
-  let results = _DATA?.currentData() || [];
-  if (onlyFullTimeJobsVisible==='true') {
-    results = results.filter(({job_type}:SingleJob)=>job_type==="full_time")
-  } 
+  const maxPages = _DATA?.maxPage
 
+
+  let results = _DATA?.currentData() || [];
+
+  
   return (
     <div>
       {status === "error" && <p>Error fetching data</p>}

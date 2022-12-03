@@ -31,6 +31,7 @@ function App() {
   let initialCheckBoxState = sessionStorage.getItem('onlyFullTimeJobsVisible')
   const [onlyFullTimeJobsVisible, setOnlyFullTimeJobsVisible] = useState<string>(initialCheckBoxState || "false")
   const [country, setCountry] = useState<string>("")
+  const [mainSearchBarQuery, setMainSearchBarQuery] = useState<string>("")
 
   const handleFullTimeCheckBox = (event: React.ChangeEvent<HTMLInputElement>) => {
       sessionStorage.setItem('onlyFullTimeJobsVisible', event.target.checked.toString())
@@ -40,6 +41,9 @@ function App() {
     setCountry(event.target.value);
   };
 
+  const handleMainSearchBar = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setMainSearchBarQuery(event.target.value);
+  };
 
   return (
     <React.StrictMode>
@@ -50,7 +54,7 @@ function App() {
             <Grid  container rowSpacing={2}>
               <Grid item xs={12} md={12}>
                 <Item className="gh-jobs-header">
-                  <SearchBar/>
+                  <SearchBar handleMainSearchBar={handleMainSearchBar}/>
                 </Item>
               </Grid>
               <Grid item xs={12} md={4}>
@@ -75,7 +79,9 @@ function App() {
                   </div>
               </Grid>
               <Grid item xs={12} md={8}>
-                <Item><JobList country={country} onlyFullTimeJobsVisible={onlyFullTimeJobsVisible}/></Item>
+                <Item><JobList
+                  mainSearchBarQuery={mainSearchBarQuery}
+                 country={country} onlyFullTimeJobsVisible={onlyFullTimeJobsVisible}/></Item>
               </Grid>
             </Grid>
           </Box>

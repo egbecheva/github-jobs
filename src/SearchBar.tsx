@@ -19,7 +19,9 @@ const StyledSearchButton = styled(Button)({
   });
 
 
-const SearchBar = () => {
+const SearchBar:React.FC<{
+  handleMainSearchBar: (event: React.ChangeEvent<HTMLInputElement>) => void}> = 
+ ({handleMainSearchBar}) => {
   return (
     <Paper
       component="form"
@@ -30,6 +32,7 @@ const SearchBar = () => {
         sx={{  flex: 1 }}
         placeholder="Title, companies, expertise or benefits"
         inputProps={{ 'aria-label': 'search google maps' }}
+        onChange={handleMainSearchBar}
       />
       <SearchButton/>
     </Paper>
