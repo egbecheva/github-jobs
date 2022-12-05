@@ -5,11 +5,12 @@ import { styled } from '@mui/material/styles';
 
 
 
-const SearchButton = () => (
-  <StyledSearchButton variant="contained">
+const SearchButton:React.FC<{mainSearchBarQuery:string}> = ({mainSearchBarQuery}) => (
+  <StyledSearchButton onClick={console.log('ff')} variant="contained">
     Search
+    {mainSearchBarQuery}
   </StyledSearchButton>
-  )
+)
 
 const StyledSearchButton = styled(Button)({
   boxShadow: "none",
@@ -20,8 +21,8 @@ const StyledSearchButton = styled(Button)({
 
 
 const MainSearchBar:React.FC<{
-  handleMainSearchBar: (event: React.ChangeEvent<HTMLInputElement>) => void}> = 
- ({handleMainSearchBar}) => {
+  handleMainSearchBar: (event: React.ChangeEvent<HTMLInputElement>) => void, mainSearchBarQuery:string}> = 
+ ({handleMainSearchBar, mainSearchBarQuery}) => {
   return (
     <Paper
       component="form"
@@ -34,7 +35,7 @@ const MainSearchBar:React.FC<{
         inputProps={{ 'aria-label': 'search google maps' }}
         onChange={handleMainSearchBar}
       />
-      <SearchButton/>
+      <SearchButton mainSearchBarQuery={mainSearchBarQuery}/>
     </Paper>
   );
 }
