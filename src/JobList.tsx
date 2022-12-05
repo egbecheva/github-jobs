@@ -16,7 +16,8 @@ import PaginationRounded from './PaginationRounded'
 
 
 
-const JobList: React.FC<{onlyFullTimeJobsVisible:string,country:string,mainSearchBarQuery:string}> = ({onlyFullTimeJobsVisible,country,mainSearchBarQuery}) => {
+const JobList: React.FC<{onlyFullTimeJobsVisible:string,country:string,mainSearchBarQuery:string,locationSearchBarQuery:string}> 
+= ({onlyFullTimeJobsVisible,country,mainSearchBarQuery,locationSearchBarQuery}) => {
 
   
   type SingleJob = {
@@ -42,14 +43,14 @@ const JobList: React.FC<{onlyFullTimeJobsVisible:string,country:string,mainSearc
     return response.json()
   }
   const { data, status } = useQuery(["jobs"], fetchJobs );
-  const _DATA = usePagination(data?.jobs,PER_PAGE,country,mainSearchBarQuery,onlyFullTimeJobsVisible);
+  const _DATA = usePagination(data?.jobs,PER_PAGE,country,mainSearchBarQuery,onlyFullTimeJobsVisible,locationSearchBarQuery);
 
   useEffect(()=>{
     setPage(1);
     _DATA?.jump(1);
-  },[country,onlyFullTimeJobsVisible])
+  },[country,onlyFullTimeJobsVisible,mainSearchBarQuery,locationSearchBarQuery])
   
-
+console.log(data?.jobs)
   const handleChange = (e:any, p:any) => {
     setPage(p);
     _DATA?.jump(p)

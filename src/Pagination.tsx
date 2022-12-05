@@ -17,7 +17,7 @@ type SingleJob = {
 }
 
 
-function usePagination(data:SingleJob[], itemsPerPage:number, country?:string | undefined, mainSearchBarQuery?:string | undefined,onlyFullTimeJobsVisible?:string) {
+function usePagination(data:SingleJob[], itemsPerPage:number, country?:string | undefined, mainSearchBarQuery?:string | undefined,onlyFullTimeJobsVisible?:string,locationSearchBarQuery?:string | undefined) {
   
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -28,6 +28,10 @@ function usePagination(data:SingleJob[], itemsPerPage:number, country?:string | 
 
   const mainSearchBarFilter = (keyWord:string,filteredJobsResults:SingleJob[]):SingleJob[]  => {
     return matchSorter(filteredJobsResults, keyWord.toString(), {keys: ['title',"company_name"]})
+  }
+
+  const locationSearchBarFilter = (keyWord:string,filteredJobsResults:SingleJob[]):SingleJob[]  => {
+    return matchSorter(filteredJobsResults, keyWord.toString(), {keys: ['candidate_required_location']})
   }
 
   const countryFilter = (c:string):SingleJob[] => {
@@ -45,6 +49,11 @@ function usePagination(data:SingleJob[], itemsPerPage:number, country?:string | 
   if(mainSearchBarQuery) {
     filteredJobsResults=(mainSearchBarFilter(mainSearchBarQuery,filteredJobsResults))
   } 
+
+  if(locationSearchBarQuery){
+    filteredJobsResults=(locationSearchBarFilter(locationSearchBarQuery,filteredJobsResults))
+
+  }
 
 //End of filtering
   

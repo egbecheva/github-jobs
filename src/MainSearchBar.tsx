@@ -19,7 +19,7 @@ const StyledSearchButton = styled(Button)({
   });
 
 
-const SearchBar:React.FC<{
+const MainSearchBar:React.FC<{
   handleMainSearchBar: (event: React.ChangeEvent<HTMLInputElement>) => void}> = 
  ({handleMainSearchBar}) => {
   return (
@@ -39,4 +39,4 @@ const SearchBar:React.FC<{
   );
 }
 
-export default SearchBar;
+export default MainSearchBar;

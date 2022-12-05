@@ -6,7 +6,8 @@ import { styled } from '@mui/material/styles';
 
 import './style.css';
 import { Grid, Paper, Box,InputBase } from '@mui/material';
-import SearchBar from "./SearchBar"
+import LocationSearchBar from "./LocationSearchBar"
+import MainSearchBar from "./MainSearchBar"
 import FullTimeCheckBox from "./FullTimeCheckBox"
 import JobList from "./JobList"
 import PreDefinedCountries from "./PreDefinedCountries"
@@ -32,6 +33,7 @@ function App() {
   const [onlyFullTimeJobsVisible, setOnlyFullTimeJobsVisible] = useState<string>(initialCheckBoxState || "false")
   const [country, setCountry] = useState<string>("")
   const [mainSearchBarQuery, setMainSearchBarQuery] = useState<string>("")
+  const [locationSearchBarQuery, setLocationSearchBarQuery] = useState<string>("")
 
   const handleFullTimeCheckBox = (event: React.ChangeEvent<HTMLInputElement>) => {
       sessionStorage.setItem('onlyFullTimeJobsVisible', event.target.checked.toString())
@@ -45,6 +47,10 @@ function App() {
     setMainSearchBarQuery(event.target.value);
   };
 
+  const handleLocationSearchBar = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLocationSearchBarQuery(event.target.value);
+  };
+
   return (
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
@@ -54,7 +60,7 @@ function App() {
             <Grid  container rowSpacing={2}>
               <Grid item xs={12} md={12}>
                 <Item className="gh-jobs-header">
-                  <SearchBar handleMainSearchBar={handleMainSearchBar}/>
+                  <MainSearchBar handleMainSearchBar={handleMainSearchBar}/>
                 </Item>
               </Grid>
               <Grid item xs={12} md={4}>
@@ -64,24 +70,14 @@ function App() {
               <div style={{color:"#B9BDCF",fontWeight:"bold",fontSize:"15px", marginBottom:"2px"}}>
                 LOCATION
               </div>
-              <Paper
-                component="form"
-                sx={{ p: '5px 5px', display: 'flex', alignItems: 'center', width: "60%", minHeight: "60px" }}
-                >
-                <PublicIcon sx={{ m: '4px 10px'}} style={{color:"#B9BDCF"}}/>
-                <InputBase
-                  sx={{  flex: 2 }}
-                  placeholder="City, state, zip code or npm ry"
-                  />
-              </Paper>
+                <LocationSearchBar handleLocationSearchBar={handleLocationSearchBar}/>
                   <div>
                     <PreDefinedCountries handleCountryChange={handleCountryChange}/>
                   </div>
               </Grid>
               <Grid item xs={12} md={8}>
                 <Item><JobList
-                  mainSearchBarQuery={mainSearchBarQuery}
-                 country={country} onlyFullTimeJobsVisible={onlyFullTimeJobsVisible}/></Item>
+                  mainSearchBarQuery={mainSearchBarQuery} country={country} onlyFullTimeJobsVisible={onlyFullTimeJobsVisible} locationSearchBarQuery={locationSearchBarQuery}/></Item>
               </Grid>
             </Grid>
           </Box>
