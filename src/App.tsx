@@ -60,7 +60,7 @@ function App() {
             <Grid  container rowSpacing={2}>
               <Grid item xs={12} md={12}>
                 <Item className="gh-jobs-header">
-                  <MainSearchBar handleMainSearchBar={handleMainSearchBar}/>
+                  <MainSearchBar mainSearchBarQuery={mainSearchBarQuery} handleMainSearchBar={handleMainSearchBar}/>
                 </Item>
               </Grid>
               <Grid item xs={12} md={4}>

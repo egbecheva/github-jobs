@@ -12,16 +12,16 @@ interface PaginationRoundedProps {
   onChange:any
 }
 
-const PaginationRounded: FC<PaginationRoundedProps> = (props):JSX.Element => {
+const PaginationRounded: FC<PaginationRoundedProps> = ({count, size, page, variant, shape, onChange}):JSX.Element => {
   return (
     <Stack spacing={2}>
       <Pagination
-        count={props.count}
-        size={props.size}
-        page={props.page}
-        variant={props.variant}
-        shape={props.shape}
-        onChange={props.onChange}
+        count={count}
+        size={size}
+        page={page}
+        variant={variant}
+        shape={shape}
+        onChange={onChange}
         />
     </Stack>
   );
