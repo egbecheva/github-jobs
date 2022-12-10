@@ -10,14 +10,28 @@ import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';  
 import { useQuery,useQueryClient } from '@tanstack/react-query'
 import PaginationRounded from './PaginationRounded'
+import { MutableRefObject } from "react"
 
 
 
 
 
 
-const JobList: React.FC<{onlyFullTimeJobsVisible:string,country:string,mainSearchBarQuery:string,locationSearchBarQuery:string}> 
-= ({onlyFullTimeJobsVisible,country,mainSearchBarQuery,locationSearchBarQuery}) => {
+const JobList: React.FC<{
+  onlyFullTimeJobsVisible:string,
+  country:string,mainSearchBarQuery:string,
+  locationSearchBarQuery:string,
+  isSearchButtonClicked:boolean,
+  setIsSearchButtonClicked:React.Dispatch<React.SetStateAction<boolean>>,
+}> 
+= ({
+  onlyFullTimeJobsVisible,
+  country,
+  mainSearchBarQuery,
+  locationSearchBarQuery,
+  isSearchButtonClicked,
+  setIsSearchButtonClicked,
+}) => {
 
   
   type SingleJob = {
@@ -43,14 +57,21 @@ const JobList: React.FC<{onlyFullTimeJobsVisible:string,country:string,mainSearc
     return response.json()
   }
   const { data, status } = useQuery(["jobs"], fetchJobs );
-  const _DATA = usePagination(data?.jobs,PER_PAGE,country,mainSearchBarQuery,onlyFullTimeJobsVisible,locationSearchBarQuery);
+  const _DATA = usePagination(
+                  data?.jobs, 
+                  PER_PAGE, 
+                  isSearchButtonClicked, 
+                  country,
+                  mainSearchBarQuery,
+                  onlyFullTimeJobsVisible,
+                  locationSearchBarQuery
+                  );
 
   useEffect(()=>{
     setPage(1);
     _DATA?.jump(1);
   },[country,onlyFullTimeJobsVisible,mainSearchBarQuery,locationSearchBarQuery])
   
-console.log(data?.jobs)
   const handleChange = (e:any, p:any) => {
     setPage(p);
     _DATA?.jump(p)

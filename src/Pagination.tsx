@@ -1,5 +1,6 @@
-import React, { useState, useRef,useEffect} from "react";
+import React, { useState,useEffect} from "react";
 import {matchSorter} from 'match-sorter'
+
 
 type SingleJob = {
   candidate_required_location: string;
@@ -17,13 +18,22 @@ type SingleJob = {
 }
 
 
-function usePagination(data:SingleJob[], itemsPerPage:number, country?:string | undefined, mainSearchBarQuery?:string | undefined,onlyFullTimeJobsVisible?:string,locationSearchBarQuery?:string | undefined) {
-  
-  const [currentPage, setCurrentPage] = useState<number>(1);
+function usePagination(
+  data:SingleJob[], 
+  itemsPerPage:number, 
+  isSearchButtonClicked:boolean,
+  country?:string, 
+  mainSearchBarQuery?:string,
+  onlyFullTimeJobsVisible?:string,
+  locationSearchBarQuery?:string,
+  ) {
 
-  let filteredJobsResults = data
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  
+  let filteredJobsResults = data;
 
   useEffect(()=>{
+ 
   },[filteredJobsResults,onlyFullTimeJobsVisible, country, mainSearchBarQuery])
 
   const mainSearchBarFilter = (keyWord:string,filteredJobsResults:SingleJob[]):SingleJob[]  => {
@@ -35,7 +45,7 @@ function usePagination(data:SingleJob[], itemsPerPage:number, country?:string | 
   }
 
   const countryFilter = (c:string):SingleJob[] => {
-    return data?.filter((e:any) => e.candidate_required_location === c)
+    return filteredJobsResults?.filter((e:any) => e.candidate_required_location === c)
   }
   
   //Filtering of multiple user choices
@@ -46,8 +56,9 @@ function usePagination(data:SingleJob[], itemsPerPage:number, country?:string | 
   if (onlyFullTimeJobsVisible==='true') {
     filteredJobsResults = filteredJobsResults?.filter(({job_type}:SingleJob)=>job_type==="full_time")
   } 
-  if(mainSearchBarQuery) {
+  if(mainSearchBarQuery && isSearchButtonClicked) {
     filteredJobsResults=(mainSearchBarFilter(mainSearchBarQuery,filteredJobsResults))
+
   } 
 
   if(locationSearchBarQuery){
@@ -80,6 +91,6 @@ function usePagination(data:SingleJob[], itemsPerPage:number, country?:string | 
     setCurrentPage(currentPage => Math.min(pageNumber, maxPage));
   }
 
-  return { next, prev, jump, currentData, currentPage, maxPage, filteredJobsResults };
+  return { next, prev, jump, currentData, currentPage, maxPage };
 }
 export default usePagination

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {  useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query' 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -12,7 +12,6 @@ import FullTimeCheckBox from "./FullTimeCheckBox"
 import JobList from "./JobList"
 import PreDefinedCountries from "./PreDefinedCountries"
 
-import PublicIcon from '@mui/icons-material/Public';
 
 
 
@@ -34,6 +33,17 @@ function App() {
   const [country, setCountry] = useState<string>("")
   const [mainSearchBarQuery, setMainSearchBarQuery] = useState<string>("")
   const [locationSearchBarQuery, setLocationSearchBarQuery] = useState<string>("")
+  const [isSearchButtonClicked,setIsSearchButtonClicked]=useState<boolean>(false)
+
+
+ useEffect(()=>{
+  //cleanup function to reset the state of the Search button in order to be able to perform subsequent searches
+  return () => {
+    setIsSearchButtonClicked(false)
+  }
+ },[mainSearchBarQuery])
+
+
 
   const handleFullTimeCheckBox = (event: React.ChangeEvent<HTMLInputElement>) => {
       sessionStorage.setItem('onlyFullTimeJobsVisible', event.target.checked.toString())
@@ -51,6 +61,13 @@ function App() {
     setLocationSearchBarQuery(event.target.value);
   };
 
+  const handleSearchButtonClick = () => {
+    if(mainSearchBarQuery){
+      setIsSearchButtonClicked(true)
+    }
+  }
+ 
+
   return (
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
@@ -60,7 +77,10 @@ function App() {
             <Grid  container rowSpacing={2}>
               <Grid item xs={12} md={12}>
                 <Item className="gh-jobs-header">
-                  <MainSearchBar mainSearchBarQuery={mainSearchBarQuery} handleMainSearchBar={handleMainSearchBar}/>
+                  <MainSearchBar 
+                  handleMainSearchBar={handleMainSearchBar}
+                  handleSearchButtonClick={handleSearchButtonClick}
+                  />
                 </Item>
               </Grid>
               <Grid item xs={12} md={4}>
@@ -77,7 +97,14 @@ function App() {
               </Grid>
               <Grid item xs={12} md={8}>
                 <Item><JobList
-                  mainSearchBarQuery={mainSearchBarQuery} country={country} onlyFullTimeJobsVisible={onlyFullTimeJobsVisible} locationSearchBarQuery={locationSearchBarQuery}/></Item>
+                  mainSearchBarQuery={mainSearchBarQuery} 
+                  country={country} 
+                  onlyFullTimeJobsVisible={onlyFullTimeJobsVisible} 
+                  locationSearchBarQuery={locationSearchBarQuery}
+                  isSearchButtonClicked={isSearchButtonClicked}
+                  setIsSearchButtonClicked={setIsSearchButtonClicked}
+                />
+                  </Item>
               </Grid>
             </Grid>
           </Box>
