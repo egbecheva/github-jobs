@@ -4,12 +4,12 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
 interface PaginationRoundedProps {
-  count:any,
-  size:any,
+  count:number,
+  size: "small" | "medium" | "large" | undefined,
   page:number,
-  variant:any,
-  shape:any,
-  onChange:any
+  variant: "text" | "outlined" | undefined,
+  shape: "circular" | "rounded" | undefined,
+  onChange:(_:any, p:number)=>void
 }
 
 const PaginationRounded: FC<PaginationRoundedProps> = ({count, size, page, variant, shape, onChange}):JSX.Element => {

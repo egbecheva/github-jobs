@@ -18,6 +18,7 @@ type SingleJob = {
 }
 
 
+
 function usePagination(
   data:SingleJob[], 
   itemsPerPage:number, 
@@ -45,7 +46,7 @@ function usePagination(
   }
 
   const countryFilter = (c:string):SingleJob[] => {
-    return filteredJobsResults?.filter((e:any) => e.candidate_required_location === c)
+    return filteredJobsResults?.filter((e:SingleJob) => e.candidate_required_location === c)
   }
   
   //Filtering of multiple user choices

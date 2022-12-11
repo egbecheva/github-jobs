@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';  
 import { useQuery,useQueryClient } from '@tanstack/react-query'
 import PaginationRounded from './PaginationRounded'
-import { MutableRefObject } from "react"
+import { ChangeEvent } from "react"
 
 
 
@@ -72,7 +72,7 @@ const JobList: React.FC<{
     _DATA?.jump(1);
   },[country,onlyFullTimeJobsVisible,mainSearchBarQuery,locationSearchBarQuery])
   
-  const handleChange = (e:any, p:any) => {
+  const handleChange = (_:any, p:number) => {
     setPage(p);
     _DATA?.jump(p)
   };
