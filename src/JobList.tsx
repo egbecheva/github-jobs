@@ -5,6 +5,7 @@ import  usePagination  from './Pagination'
 import Box from '@mui/material/Box';  
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';  
@@ -48,6 +49,18 @@ const JobList: React.FC<{
     title:string;
     url:string
   }
+
+  type JobTypes = {
+    contract:string;
+    part_time:string;
+    full_time:string;
+    freelance: string;
+    internship:string;
+    other:string
+  }
+  
+
+
   const queryClient = useQueryClient()
   let [page, setPage] = useState(1);
   const PER_PAGE:number = 10;
@@ -84,6 +97,7 @@ const JobList: React.FC<{
   
   return (
     <div>
+
       {status === "error" && <p>Error fetching data</p>}
       {status === "loading" && <p>Fetching data...</p>}
       {status === "success" && results.map((job:SingleJob) => 
@@ -105,6 +119,16 @@ const JobList: React.FC<{
   }
 
   function JobCard(props:OwnProps) {
+
+    const job_contracts:any = {
+      contract:"Contract",
+      part_time:"Part time",
+      full_time:"Full time",
+      freelance: "Freelance",
+      internship:"Internship",
+      other:"Other"
+    }
+
     const {
       id, 
       company_logo,
@@ -114,30 +138,32 @@ const JobList: React.FC<{
       candidate_required_location,
       job_type
     } = props.jobDetails;
+
+  
     
-    return <div key={id} style={{ margin: "2px" }}>
-      <Card sx={{ display: 'flex' }}>
+    return <div>
+
+      <Card key={id} sx={{ display: 'flex', height: "114px", width: "790px", left: "531px", top: "280px", borderRadius: "4px", margin:'20px', boxShadow:'none'}}>
         <CardMedia
           component="img"
-          sx={{ width: 151 }}
+          sx={{ height: "90px", width: "90px", margin:"12px", borderRadius: "4px" }}
           image={company_logo}
           alt="Live from space album cover" />
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <CardContent sx={{ flex: '1 0 auto' }}>
-            <Typography component="div" variant="h5">
-              {title}
-            </Typography>
-            <Typography variant="subtitle1" color="text.secondary" component="div">
+            <Typography component="div" variant="subtitle1" align="left" style={{fontWeight: "bold", fontSize:'12px'}}>
               {company_name}
             </Typography>
+            <Typography variant="h5" component="div" align="left" style={{fontSize: "18px"}}>
+              {title}
+            </Typography>
+            <span>{publication_date}</span>
+            <span>{candidate_required_location}</span>
+              <span style={{ display: 'flex', alignItems: 'center'}}></span>
+              <span>
+                {job_type && <Chip style={{borderRadius:"5px", borderColor:"#334680"}} label={job_contracts[job_type]} variant="outlined" size="small"/>}
+              </span>
           </CardContent>
-          <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
-            <Chip label={job_type} variant="outlined" />
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'right', pl: 1, pb: 1 }}>
-            <div>{publication_date}</div>
-            <div>{candidate_required_location}</div>
-          </Box>
         </Box>
       </Card>
     </div>;

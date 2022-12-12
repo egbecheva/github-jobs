@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import {  useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query' 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { styled } from '@mui/material/styles';
 
 import './style.css';
-import { Grid, Paper, Box,InputBase } from '@mui/material';
+import { Grid, Paper, Box } from '@mui/material';
 import LocationSearchBar from "./LocationSearchBar"
 import MainSearchBar from "./MainSearchBar"
 import FullTimeCheckBox from "./FullTimeCheckBox"
@@ -17,17 +17,9 @@ import PreDefinedCountries from "./PreDefinedCountries"
 
 const queryClient = new QueryClient()
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
-
-
 function App() {
   
+
   let initialCheckBoxState = sessionStorage.getItem('onlyFullTimeJobsVisible')
   const [onlyFullTimeJobsVisible, setOnlyFullTimeJobsVisible] = useState<string>(initialCheckBoxState || "false")
   const [country, setCountry] = useState<string>("")
@@ -37,10 +29,8 @@ function App() {
 
 
  useEffect(()=>{
-  //cleanup function to reset the state of the Search button in order to be able to perform subsequent searches
-  return () => {
+  //reset the state of the Search button in order to be able to perform subsequent searches
     setIsSearchButtonClicked(false)
-  }
  },[mainSearchBarQuery])
 
 
@@ -73,15 +63,15 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <div>
           <Box mx={20}>
-          <h1 className="gh-jobs-title"><strong>Remote</strong> Jobs</h1>
+          <h1 className="gh-jobs-title" style={{fontSize:"24px"}}><strong>Remote</strong> Jobs</h1>
             <Grid  container rowSpacing={2}>
               <Grid item xs={12} md={12}>
-                <Item className="gh-jobs-header">
+                <Paper className="gh-jobs-header">
                   <MainSearchBar 
                   handleMainSearchBar={handleMainSearchBar}
                   handleSearchButtonClick={handleSearchButtonClick}
                   />
-                </Item>
+                </Paper>
               </Grid>
               <Grid item xs={12} md={4}>
                 <div>
@@ -95,8 +85,8 @@ function App() {
                     <PreDefinedCountries handleCountryChange={handleCountryChange}/>
                   </div>
               </Grid>
-              <Grid item xs={12} md={8}>
-                <Item><JobList
+              <Grid item xs={12} md={8} >
+                <Paper style={{backgroundColor:"#F6F7FB", boxShadow:'none'}}><JobList
                   mainSearchBarQuery={mainSearchBarQuery} 
                   country={country} 
                   onlyFullTimeJobsVisible={onlyFullTimeJobsVisible} 
@@ -104,7 +94,7 @@ function App() {
                   isSearchButtonClicked={isSearchButtonClicked}
                   setIsSearchButtonClicked={setIsSearchButtonClicked}
                 />
-                  </Item>
+                  </Paper>
               </Grid>
             </Grid>
           </Box>

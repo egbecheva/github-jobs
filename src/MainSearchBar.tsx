@@ -24,7 +24,7 @@ const StyledSearchButton = styled(Button)({
 
 
 const MainSearchBar:React.FC<{
-  handleMainSearchBar: (event: React.ChangeEvent<HTMLInputElement>) => void ,handleSearchButtonClick:()=>void}> = 
+  handleMainSearchBar: (event: React.ChangeEvent<HTMLInputElement>) => void,handleSearchButtonClick:()=>void}> = 
  ({handleMainSearchBar,handleSearchButtonClick}) => {
   return (
     <Paper
