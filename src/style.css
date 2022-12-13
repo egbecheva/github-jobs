@@ -12,18 +12,14 @@ h1, h2, h3, h4, h5, strong, p, span, div {
   align-items: center;
   background-image: url("../public/backgroundImg.png");
   height:150px;
-  width:1200px;
-  border-radius: 6px !important;
+  border-radius:6px !important
+
 }
 
-.gh-jobs-search-bar{
-  width: 50%;
-  background-color: white;
-  border-radius: 6px;
-}
 
 .gh-jobs-title{
   padding: 4px 0px;
+  font-size:36px;
   font-weight:normal;
   color: #334680;
 }

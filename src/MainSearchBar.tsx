@@ -1,46 +1,58 @@
 import './style.css';
-import { Button, Paper, InputBase} from '@mui/material';
+import { Button, Paper, InputBase } from '@mui/material';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import { styled } from '@mui/material/styles';
 
-
-
-const SearchButton:React.FC<{
-    handleSearchButtonClick:()=>void}> = ({
-    handleSearchButtonClick
-  }) => {
-    return (
-  <StyledSearchButton  onClick={handleSearchButtonClick} variant="contained">
-    Search
-  </StyledSearchButton>
-)}
+const SearchButton: React.FC<{
+  handleSearchButtonClick: () => void;
+}> = ({ handleSearchButtonClick }) => {
+  return (
+    <StyledSearchButton onClick={handleSearchButtonClick} variant='contained'>
+      Search
+    </StyledSearchButton>
+  );
+};
 
 const StyledSearchButton = styled(Button)({
-  boxShadow: "none",
-  backgroundColor:"#1E86FF",
-  minWidth: "170px",
-  minHeight: "60px"
-  });
+  boxShadow: 'none',
+  backgroundColor: '#1E86FF',
+  minWidth: '170px',
+  minHeight: '60px',
+  margin: '5px',
+});
 
-
-const MainSearchBar:React.FC<{
-  handleMainSearchBar: (event: React.ChangeEvent<HTMLInputElement>) => void,handleSearchButtonClick:()=>void}> = 
- ({handleMainSearchBar,handleSearchButtonClick}) => {
+const MainSearchBar: React.FC<{
+  handleMainSearchBar: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSearchButtonClick: () => void;
+}> = ({ handleMainSearchBar, handleSearchButtonClick }) => {
   return (
     <Paper
-      component="form"
-      sx={{ p: '5px 5px', display: 'flex', alignItems: 'center', width: "60%", minHeight: "60px" }}
+      component='form'
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        minHeight: '60px',
+        flexGrow: '0.5',
+      }}
     >
-      <WorkOutlineIcon sx={{ m: '4px 10px'}} style={{color:"#B9BDCF"}}/>
-      <InputBase
-        sx={{  flex: 1 }}
-        placeholder="Title, companies, expertise or benefits"
-        inputProps={{ 'aria-label': 'search google maps' }}
-        onChange={handleMainSearchBar}
-      />
-      <SearchButton handleSearchButtonClick={handleSearchButtonClick}/>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 5,
+          marginLeft: '15px',
+        }}
+      >
+        <WorkOutlineIcon style={{ color: '#B9BDCF' }} />
+        <InputBase
+          placeholder='Title, companies, expertise or benefits'
+          onChange={handleMainSearchBar}
+        />
+      </div>
+      <SearchButton handleSearchButtonClick={handleSearchButtonClick} />
     </Paper>
   );
-}
+};
 
 export default MainSearchBar;

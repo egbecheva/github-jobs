@@ -1,44 +1,44 @@
 import React, { useEffect } from 'react';
-import {  useState } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query' 
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { useState } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { styled } from '@mui/material/styles';
 
 import './style.css';
 import { Grid, Paper, Box } from '@mui/material';
-import LocationSearchBar from "./LocationSearchBar"
-import MainSearchBar from "./MainSearchBar"
-import FullTimeCheckBox from "./FullTimeCheckBox"
-import JobList from "./JobList"
-import PreDefinedCountries from "./PreDefinedCountries"
+import LocationSearchBar from './LocationSearchBar';
+import MainSearchBar from './MainSearchBar';
+import FullTimeCheckBox from './FullTimeCheckBox';
+import JobList from './JobList';
+import PreDefinedCountries from './PreDefinedCountries';
 
-
-
-
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 function App() {
-  
+  let initialCheckBoxState = sessionStorage.getItem('onlyFullTimeJobsVisible');
+  const [onlyFullTimeJobsVisible, setOnlyFullTimeJobsVisible] =
+    useState<string>(initialCheckBoxState || 'false');
+  const [country, setCountry] = useState<string>('');
+  const [mainSearchBarQuery, setMainSearchBarQuery] = useState<string>('');
+  const [locationSearchBarQuery, setLocationSearchBarQuery] =
+    useState<string>('');
+  const [isSearchButtonClicked, setIsSearchButtonClicked] =
+    useState<boolean>(false);
 
-  let initialCheckBoxState = sessionStorage.getItem('onlyFullTimeJobsVisible')
-  const [onlyFullTimeJobsVisible, setOnlyFullTimeJobsVisible] = useState<string>(initialCheckBoxState || "false")
-  const [country, setCountry] = useState<string>("")
-  const [mainSearchBarQuery, setMainSearchBarQuery] = useState<string>("")
-  const [locationSearchBarQuery, setLocationSearchBarQuery] = useState<string>("")
-  const [isSearchButtonClicked,setIsSearchButtonClicked]=useState<boolean>(false)
+  useEffect(() => {
+    //reset the state of the Search button in order to be able to perform subsequent searches
+    setIsSearchButtonClicked(false);
+  }, [mainSearchBarQuery]);
 
-
- useEffect(()=>{
-  //reset the state of the Search button in order to be able to perform subsequent searches
-    setIsSearchButtonClicked(false)
- },[mainSearchBarQuery])
-
-
-
-  const handleFullTimeCheckBox = (event: React.ChangeEvent<HTMLInputElement>) => {
-      sessionStorage.setItem('onlyFullTimeJobsVisible', event.target.checked.toString())
-      setOnlyFullTimeJobsVisible(event.target.checked.toString())
-  }
+  const handleFullTimeCheckBox = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    sessionStorage.setItem(
+      'onlyFullTimeJobsVisible',
+      event.target.checked.toString()
+    );
+    setOnlyFullTimeJobsVisible(event.target.checked.toString());
+  };
   const handleCountryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCountry(event.target.value);
   };
@@ -47,61 +47,85 @@ function App() {
     setMainSearchBarQuery(event.target.value);
   };
 
-  const handleLocationSearchBar = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleLocationSearchBar = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setLocationSearchBarQuery(event.target.value);
   };
 
   const handleSearchButtonClick = () => {
-    if(mainSearchBarQuery){
-      setIsSearchButtonClicked(true)
+    if (mainSearchBarQuery) {
+      setIsSearchButtonClicked(true);
     }
-  }
- 
+  };
+  const gridStyles = {
+    paddingBottom: 2,
+    paddingRight: 2,
+    marginTop: 2,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    maxWidth: 1200,
+  };
 
   return (
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
-        <div>
-          <Box mx={20}>
-          <h1 className="gh-jobs-title" style={{fontSize:"24px"}}><strong>Remote</strong> Jobs</h1>
-            <Grid  container rowSpacing={2}>
-              <Grid item xs={12} md={12}>
-                <Paper className="gh-jobs-header">
-                  <MainSearchBar 
+        <Box>
+          <Grid container sx={gridStyles}>
+            <h1 className='gh-jobs-title'>
+              <strong>Remote</strong> Jobs
+            </h1>
+            <Grid md={12} item>
+              <Paper className='gh-jobs-header'>
+                <MainSearchBar
                   handleMainSearchBar={handleMainSearchBar}
                   handleSearchButtonClick={handleSearchButtonClick}
-                  />
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <div>
-                  <FullTimeCheckBox handleFullTimeCheckBox={handleFullTimeCheckBox} onlyFullTimeJobsVisible={onlyFullTimeJobsVisible}/>
+                />
+              </Paper>
+            </Grid>
+            <Grid item md={4}>
+              <div>
+                <FullTimeCheckBox
+                  handleFullTimeCheckBox={handleFullTimeCheckBox}
+                  onlyFullTimeJobsVisible={onlyFullTimeJobsVisible}
+                />
               </div>
-              <div style={{color:"#B9BDCF",fontWeight:"bold",fontSize:"15px", marginBottom:"2px"}}>
+              <div
+                style={{
+                  color: '#B9BDCF',
+                  fontWeight: 'bold',
+                  fontSize: '15px',
+                  marginBottom: '25px',
+                }}
+              >
                 LOCATION
               </div>
-                <LocationSearchBar handleLocationSearchBar={handleLocationSearchBar}/>
-                  <div>
-                    <PreDefinedCountries handleCountryChange={handleCountryChange}/>
-                  </div>
-              </Grid>
-              <Grid item xs={12} md={8} >
-                <Paper style={{backgroundColor:"#F6F7FB", boxShadow:'none'}}><JobList
-                  mainSearchBarQuery={mainSearchBarQuery} 
-                  country={country} 
-                  onlyFullTimeJobsVisible={onlyFullTimeJobsVisible} 
+              <LocationSearchBar
+                handleLocationSearchBar={handleLocationSearchBar}
+              />
+              <div>
+                <PreDefinedCountries
+                  handleCountryChange={handleCountryChange}
+                />
+              </div>
+            </Grid>
+            <Grid item md={8}>
+              <Paper style={{ backgroundColor: '#F6F7FB', boxShadow: 'none' }}>
+                <JobList
+                  mainSearchBarQuery={mainSearchBarQuery}
+                  country={country}
+                  onlyFullTimeJobsVisible={onlyFullTimeJobsVisible}
                   locationSearchBarQuery={locationSearchBarQuery}
                   isSearchButtonClicked={isSearchButtonClicked}
                   setIsSearchButtonClicked={setIsSearchButtonClicked}
                 />
-                  </Paper>
-              </Grid>
+              </Paper>
             </Grid>
-          </Box>
-        </div>
-      <ReactQueryDevtools />
-    </QueryClientProvider>
-  </React.StrictMode>
+          </Grid>
+        </Box>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </React.StrictMode>
   );
 }
 
