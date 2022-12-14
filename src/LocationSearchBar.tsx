@@ -20,7 +20,7 @@ const LocationSearchBar: React.FC<{
       <PublicIcon sx={{ m: '4px 10px' }} style={{ color: '#B9BDCF' }} />
       <InputBase
         style={{ width: '100%' }}
-        placeholder='City,state or ZIP code'
+        placeholder='City, state or ZIP code'
         onChange={handleLocationSearchBar}
       />
     </Paper>

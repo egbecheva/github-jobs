@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import Container from '@mui/material/Container';
 import { styled } from '@mui/material/styles';
 
 import './style.css';
@@ -59,23 +60,20 @@ function App() {
     }
   };
   const gridStyles = {
-    paddingBottom: 2,
-    paddingRight: 2,
-    marginTop: 2,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    maxWidth: 1200,
+    paddingX: 2,
   };
 
   return (
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
-        <Box>
+        <Container>
           <Grid container sx={gridStyles}>
-            <h1 className='gh-jobs-title'>
-              <strong>Remote</strong> Jobs
-            </h1>
-            <Grid md={12} item>
+            <Grid xs={12} item>
+              <h1 className='gh-jobs-title'>
+                <strong>Remote</strong> Jobs
+              </h1>
+            </Grid>
+            <Grid xs={12} item>
               <Paper className='gh-jobs-header'>
                 <MainSearchBar
                   handleMainSearchBar={handleMainSearchBar}
@@ -83,7 +81,7 @@ function App() {
                 />
               </Paper>
             </Grid>
-            <Grid item md={4}>
+            <Grid item xs={12} md={4}>
               <div>
                 <FullTimeCheckBox
                   handleFullTimeCheckBox={handleFullTimeCheckBox}
@@ -122,7 +120,7 @@ function App() {
               </Paper>
             </Grid>
           </Grid>
-        </Box>
+        </Container>
         <ReactQueryDevtools />
       </QueryClientProvider>
     </React.StrictMode>

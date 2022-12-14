@@ -32,8 +32,8 @@ const MainSearchBar: React.FC<{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        minHeight: '60px',
         flexGrow: '0.5',
+        margin: '20px',
       }}
     >
       <div
@@ -42,10 +42,12 @@ const MainSearchBar: React.FC<{
           alignItems: 'center',
           gap: 5,
           marginLeft: '15px',
+          flexGrow: '1',
         }}
       >
         <WorkOutlineIcon style={{ color: '#B9BDCF' }} />
         <InputBase
+          style={{ width: '100%' }}
           placeholder='Title, companies, expertise or benefits'
           onChange={handleMainSearchBar}
         />

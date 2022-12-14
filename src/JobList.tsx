@@ -4,7 +4,9 @@ import usePagination from './Pagination';
 
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import Chip from '@mui/material/Chip';
+import PublicIcon from '@mui/icons-material/Public';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import PaginationRounded from './PaginationRounded';
 import { formatDistance, subDays } from 'date-fns';
@@ -180,15 +182,36 @@ const JobList: React.FC<{
             display: 'flex',
             alignItems: 'flex-end',
             padding: '12px',
+            gap: 40,
           }}
         >
-          <span style={{ fontSize: '12px' }}>
+          <span
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              fontSize: '12px',
+              color: 'grey',
+            }}
+          >
+            <AccessTimeIcon
+              style={{ fontSize: '12px', color: 'grey', marginRight: '2px' }}
+            />
+            {candidate_required_location}
+          </span>
+          <span
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              fontSize: '12px',
+              color: 'grey',
+            }}
+          >
+            <PublicIcon
+              style={{ fontSize: '12px', color: 'grey', marginRight: '2px' }}
+            />
             {formatDistance(new Date(publication_date), new Date(), {
               addSuffix: true,
             })}
-          </span>
-          <span style={{ fontSize: '12px' }}>
-            {candidate_required_location}
           </span>
         </div>
       </Card>
