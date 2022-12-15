@@ -66,7 +66,7 @@ function App() {
   return (
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
-        <Container>
+        <Container sx={{ p: 0 }}>
           <Grid container sx={gridStyles}>
             <Grid xs={12} item>
               <h1 className='gh-jobs-title'>
@@ -107,7 +107,7 @@ function App() {
                 />
               </div>
             </Grid>
-            <Grid item md={8}>
+            <Grid item xs={12} md={8}>
               <Paper style={{ backgroundColor: '#F6F7FB', boxShadow: 'none' }}>
                 <JobList
                   mainSearchBarQuery={mainSearchBarQuery}

@@ -11,8 +11,9 @@ h1, h2, h3, h4, h5, strong, p, span, div {
   justify-content: center;
   align-items: center;
   background-image: url("../public/backgroundImg.png");
+  background-position: center;
   height:150px;
-  border-radius:6px !important
+  border-radius:6px
 
 }
 
@@ -22,4 +23,32 @@ h1, h2, h3, h4, h5, strong, p, span, div {
   font-size:36px;
   font-weight:normal;
   color: #334680;
+}
+
+.job-card-content-wrapper {
+  display: flex;
+  width: 100%;
+}
+
+
+@media screen and (min-width: 601px) {
+  .btn-min-width {
+    min-width: 170px !important;
+  };
+
+}
+
+@media screen and (min-width:601px){
+  .visible-xs {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .hidden-xs {
+    display: none;
+  }
+  .job-card-content-wrapper {
+    flex-direction: column;
+  }
 }

@@ -149,70 +149,72 @@ const JobList: React.FC<{
           }}
           image={company_logo}
         />
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            margin: '12px',
-            flexGrow: 1,
-          }}
-        >
-          <div style={{ fontWeight: 'bold', fontSize: '12px' }}>
-            {company_name}
+        <div className='job-card-content-wrapper'>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              margin: '12px',
+              flexGrow: 1,
+            }}
+          >
+            <div style={{ fontWeight: 'bold', fontSize: '12px' }}>
+              {company_name}
+            </div>
+            <div style={{ fontSize: '18px' }}>{title}</div>
+            <div>
+              {job_type && (
+                <Chip
+                  style={{
+                    borderRadius: '5px',
+                    borderColor: '#334680',
+                    marginTop: '6px',
+                  }}
+                  label={job_contracts[job_type]}
+                  variant='outlined'
+                  size='small'
+                />
+              )}
+            </div>
           </div>
-          <div style={{ fontSize: '18px' }}>{title}</div>
-          <div>
-            {job_type && (
-              <Chip
-                style={{
-                  borderRadius: '5px',
-                  borderColor: '#334680',
-                  marginTop: '6px',
-                }}
-                label={job_contracts[job_type]}
-                variant='outlined'
-                size='small'
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'flex-end',
+              padding: '12px',
+              gap: 40,
+            }}
+          >
+            <span
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                fontSize: '12px',
+                color: 'grey',
+              }}
+            >
+              <AccessTimeIcon
+                style={{ fontSize: '12px', color: 'grey', marginRight: '2px' }}
               />
-            )}
+              {candidate_required_location}
+            </span>
+            <span
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                fontSize: '12px',
+                color: 'grey',
+              }}
+            >
+              <PublicIcon
+                style={{ fontSize: '12px', color: 'grey', marginRight: '2px' }}
+              />
+              {formatDistance(new Date(publication_date), new Date(), {
+                addSuffix: true,
+              })}
+            </span>
           </div>
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'flex-end',
-            padding: '12px',
-            gap: 40,
-          }}
-        >
-          <span
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              fontSize: '12px',
-              color: 'grey',
-            }}
-          >
-            <AccessTimeIcon
-              style={{ fontSize: '12px', color: 'grey', marginRight: '2px' }}
-            />
-            {candidate_required_location}
-          </span>
-          <span
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              fontSize: '12px',
-              color: 'grey',
-            }}
-          >
-            <PublicIcon
-              style={{ fontSize: '12px', color: 'grey', marginRight: '2px' }}
-            />
-            {formatDistance(new Date(publication_date), new Date(), {
-              addSuffix: true,
-            })}
-          </span>
         </div>
       </Card>
     );
