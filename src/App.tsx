@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Container from '@mui/material/Container';
@@ -9,6 +10,7 @@ import './style.css';
 import { Grid, Paper, Box } from '@mui/material';
 import LocationSearchBar from './LocationSearchBar';
 import MainSearchBar from './MainSearchBar';
+import JobDetails from './JobDetails';
 import FullTimeCheckBox from './FullTimeCheckBox';
 import JobList from './JobList';
 import PreDefinedCountries from './PreDefinedCountries';
@@ -63,16 +65,12 @@ function App() {
     paddingX: 2,
   };
 
-  return (
-    <React.StrictMode>
-      <QueryClientProvider client={queryClient}>
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: (
         <Container sx={{ p: 0 }}>
           <Grid container sx={gridStyles}>
-            <Grid xs={12} item>
-              <h1 className='gh-jobs-title'>
-                <strong>Remote</strong> Jobs
-              </h1>
-            </Grid>
             <Grid xs={12} item>
               <Paper className='gh-jobs-header'>
                 <MainSearchBar
@@ -121,7 +119,26 @@ function App() {
             </Grid>
           </Grid>
         </Container>
-        <ReactQueryDevtools />
+      ),
+    },
+    {
+      path: 'job-details',
+      element: <JobDetails />,
+    },
+  ]);
+  return (
+    <React.StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <Container sx={{ p: 0 }}>
+          <Grid container sx={gridStyles}>
+            <Grid xs={12} item>
+              <h1 className='gh-jobs-title'>
+                <strong>Remote</strong> Jobs
+              </h1>
+            </Grid>
+          </Grid>
+        </Container>
+        <RouterProvider router={router} />
       </QueryClientProvider>
     </React.StrictMode>
   );
