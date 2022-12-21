@@ -4,12 +4,14 @@ import usePagination from './Pagination';
 
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
+import CardActionArea from '@mui/material/CardActionArea';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import Chip from '@mui/material/Chip';
 import PublicIcon from '@mui/icons-material/Public';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import PaginationRounded from './PaginationRounded';
 import { formatDistance, subDays } from 'date-fns';
+import { Link } from 'react-router-dom';
 
 const JobList: React.FC<{
   onlyFullTimeJobsVisible: string;
@@ -86,13 +88,23 @@ const JobList: React.FC<{
   const maxPages = _DATA?.maxPage;
 
   let results = _DATA?.currentData() || [];
-
   return (
     <div>
       {status === 'error' && <p>Error fetching data</p>}
       {status === 'loading' && <p>Fetching data...</p>}
       {status === 'success' &&
-        results.map((job: SingleJob) => <JobCard jobDetails={job} />)}
+        results.map((job: SingleJob) => (
+          <Link
+            to={{
+              pathname: `job-details/${job.id}`,
+            }}
+            state={{
+              company_name: job.company_name,
+            }}
+          >
+            <JobCard jobDetails={job} />
+          </Link>
+        ))}
       <PaginationRounded
         count={maxPages}
         size='large'
@@ -129,94 +141,111 @@ const JobList: React.FC<{
     } = props.jobDetails;
 
     return (
-      <Card
-        key={id}
-        style={{
-          display: 'flex',
-          borderRadius: '4px',
-          fontFamily: 'Roboto',
-          boxShadow: 'none',
-          marginTop: '20px',
-        }}
-      >
-        <CardMedia
-          component='img'
-          sx={{
-            height: '90px',
-            width: '90px',
-            margin: '12px',
-            borderRadius: '4px',
-          }}
-          image={company_logo}
-        />
-        <div className='job-card-content-wrapper'>
-          <div
+      <CardActionArea>
+        <div onClick={() => console.log(44)}>
+          <Card
+            key={id}
             style={{
               display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              margin: '12px',
-              flexGrow: 1,
+              borderRadius: '4px',
+              fontFamily: 'Roboto',
+              boxShadow: 'none',
+              marginTop: '20px',
             }}
           >
-            <div style={{ fontWeight: 'bold', fontSize: '12px' }}>
-              {company_name}
-            </div>
-            <div style={{ fontSize: '18px' }}>{title}</div>
-            <div>
-              {job_type && (
-                <Chip
+            <CardMedia
+              component='img'
+              sx={{
+                height: '90px',
+                width: '90px',
+                margin: '12px',
+                borderRadius: '4px',
+              }}
+              image={company_logo}
+            />
+            <div className='job-card-content-wrapper'>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  margin: '12px',
+                  flexGrow: 1,
+                }}
+              >
+                <div
                   style={{
-                    borderRadius: '5px',
-                    borderColor: '#334680',
-                    marginTop: '6px',
+                    fontWeight: 'bold',
+                    fontSize: '12px',
                   }}
-                  label={job_contracts[job_type]}
-                  variant='outlined'
-                  size='small'
-                />
-              )}
+                >
+                  {company_name}
+                </div>
+                <div style={{ fontSize: '18px' }}>{title}</div>
+                <div>
+                  {job_type && (
+                    <Chip
+                      style={{
+                        borderRadius: '5px',
+                        borderColor: '#334680',
+                        marginTop: '6px',
+                      }}
+                      label={job_contracts[job_type]}
+                      variant='outlined'
+                      size='small'
+                    />
+                  )}
+                </div>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-end',
+                  padding: '12px',
+                  gap: 40,
+                }}
+              >
+                <span
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontSize: '12px',
+                    color: 'grey',
+                  }}
+                >
+                  <AccessTimeIcon
+                    style={{
+                      fontSize: '12px',
+                      color: 'grey',
+                      marginRight: '2px',
+                    }}
+                  />
+                  {candidate_required_location}
+                </span>
+                <span
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontSize: '12px',
+                    color: 'grey',
+                  }}
+                >
+                  <PublicIcon
+                    style={{
+                      fontSize: '12px',
+                      color: 'grey',
+                      marginRight: '2px',
+                    }}
+                  />
+                  {formatDistance(new Date(publication_date), new Date(), {
+                    addSuffix: true,
+                  })}
+                </span>
+              </div>
             </div>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'flex-end',
-              padding: '12px',
-              gap: 40,
-            }}
-          >
-            <span
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                fontSize: '12px',
-                color: 'grey',
-              }}
-            >
-              <AccessTimeIcon
-                style={{ fontSize: '12px', color: 'grey', marginRight: '2px' }}
-              />
-              {candidate_required_location}
-            </span>
-            <span
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                fontSize: '12px',
-                color: 'grey',
-              }}
-            >
-              <PublicIcon
-                style={{ fontSize: '12px', color: 'grey', marginRight: '2px' }}
-              />
-              {formatDistance(new Date(publication_date), new Date(), {
-                addSuffix: true,
-              })}
-            </span>
-          </div>
+          </Card>
         </div>
-      </Card>
+      </CardActionArea>
     );
   }
 };

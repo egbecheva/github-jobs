@@ -2,9 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Container from '@mui/material/Container';
-import { styled } from '@mui/material/styles';
 
 import './style.css';
 import { Grid, Paper, Box } from '@mui/material';
@@ -122,7 +120,7 @@ function App() {
       ),
     },
     {
-      path: 'job-details',
+      path: 'job-details/:id',
       element: <JobDetails />,
     },
   ]);
