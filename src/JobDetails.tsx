@@ -1,6 +1,6 @@
 import React from 'react';
-import { Grid, Container } from '@mui/material';
-import { useLocation } from 'react-router-dom';
+import { Button, Container, Grid } from '@mui/material';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Chip from '@mui/material/Chip';
 import PublicIcon from '@mui/icons-material/Public';
 import { formatDistance } from 'date-fns';
@@ -28,6 +28,8 @@ const JobDetails: React.FC<{}> = ({}) => {
     },
   } = useLocation();
 
+  let navigate = useNavigate();
+
   function createMarkup(text: string) {
     return { __html: text };
   }
@@ -37,9 +39,7 @@ const JobDetails: React.FC<{}> = ({}) => {
       <Container>
         <Grid container>
           <Grid item xs={12} md={3}>
-            <div>Back to Home</div>
-            <div>{company_name} bab </div>
-            <div>How to apply</div>
+            <Button onClick={() => navigate('/')}>Back to search</Button>
           </Grid>
           <Grid item xs={12} md={9}>
             <div className='chip_job_type'>
@@ -72,16 +72,22 @@ const JobDetails: React.FC<{}> = ({}) => {
               style={{
                 display: 'flex',
                 alignItems: 'space-between',
-                marginTop: '10px',
+                marginTop: '40px',
               }}
             >
               <img src={logo} className='company_logo' alt='company_logo' />
-              <div style={{ marginLeft: '5px' }}>
+              <div
+                style={{
+                  marginLeft: '5px',
+                  height: '50px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-around',
+                }}
+              >
                 <div>{company_name}</div>
-                <span
+                <div
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
                     fontSize: '12px',
                     color: 'grey',
                   }}
@@ -95,7 +101,7 @@ const JobDetails: React.FC<{}> = ({}) => {
                     }}
                   />
                   {job_location}
-                </span>
+                </div>
               </div>
             </div>
             <div dangerouslySetInnerHTML={createMarkup(job_description)} />

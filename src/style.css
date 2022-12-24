@@ -78,7 +78,7 @@ a{
 
 .job_details_chip{
   border-radius: 5px !important;
-  border-color: #334680;
+  border-color: #334680 !important;
   margin-top: 6px;
 }
 
