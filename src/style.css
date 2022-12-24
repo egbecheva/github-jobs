@@ -51,8 +51,46 @@ h1, h2, h3, h4, h5, strong, p, span, div {
   .job-card-content-wrapper {
     flex-direction: column;
   }
+
+  .chip_job_type{
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
 }
 
 a{
   text-decoration: none;
  }
+
+ .chip_job_type{
+  display:flex;
+  align-items: center;
+}
+
+.publication-time-wrapper{
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  color: grey;
+  margin-top: 5px;
+}
+
+.job_details_chip{
+  border-radius: 5px !important;
+  border-color: #334680;
+  margin-top: 6px;
+}
+
+.job_title{
+  font-size: 24px;
+  margin-right: 10px;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.company_logo{
+  height: 50px;
+  width: 50px;
+  border-radius: 4px;
+}

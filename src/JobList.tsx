@@ -10,7 +10,7 @@ import Chip from '@mui/material/Chip';
 import PublicIcon from '@mui/icons-material/Public';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import PaginationRounded from './PaginationRounded';
-import { formatDistance, subDays } from 'date-fns';
+import { formatDistance } from 'date-fns';
 import { Link } from 'react-router-dom';
 
 const JobList: React.FC<{
@@ -100,6 +100,12 @@ const JobList: React.FC<{
             }}
             state={{
               company_name: job.company_name,
+              job_description: job.description,
+              job_title: job.title,
+              job_location: job.candidate_required_location,
+              logo: job.company_logo,
+              job_publication: job.publication_date,
+              job_type: job.job_type,
             }}
           >
             <JobCard jobDetails={job} />
@@ -142,7 +148,7 @@ const JobList: React.FC<{
 
     return (
       <CardActionArea>
-        <div onClick={() => console.log(44)}>
+        <div>
           <Card
             key={id}
             style={{
@@ -166,8 +172,8 @@ const JobList: React.FC<{
             <div className='job-card-content-wrapper'>
               <div
                 style={{
-                  display: 'flex',
                   flexDirection: 'column',
+                  display: 'flex',
                   justifyContent: 'space-between',
                   margin: '12px',
                   flexGrow: 1,
