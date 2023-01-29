@@ -95,6 +95,7 @@ const JobList: React.FC<{
       {status === 'success' &&
         results.map((job: SingleJob) => (
           <Link
+            key={job.id}
             to={{
               pathname: `job-details/${job.id}`,
             }}
