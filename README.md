@@ -1,46 +1,66 @@
-# Getting Started with Create React App
+<!-- Please update value in the {}  -->
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h1 align="center">Remote jobs SPA</h1>
 
-## Available Scripts
+<div align="center">
+  <h3>
+    <a href="https://github-jobs-86113.web.app/?">
+      Demo
+    </a>
+  </h3>
+</div>
 
-In the project directory, you can run:
+<!-- TABLE OF CONTENTS -->
 
-### `npm start`
+## Table of Contents
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [Overview](#overview)
+  - [Built With](#built-with)
+- [Features](#features)
+- [How to use](#how-to-use)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<!-- OVERVIEW -->
 
-### `npm test`
+## Overview
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![overview1](https://user-images.githubusercontent.com/34000861/215329749-0444f6cb-7a4c-4dd3-a0b2-d5a570350ae5.JPG)
+![overview2](https://user-images.githubusercontent.com/34000861/215329771-213120de-1e38-4347-a480-8820234f38d4.JPG)
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Built With
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<!-- This section should list any major frameworks that you built your project using. Here are a few examples.-->
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- React
+- TypeScript
+- Material UI
+- Babel
+- Webpack
 
-### `npm run eject`
+## Features
+A web-based application that utilizes a RESTful API to retrieve remote job listings from a remote server. The app allows users to search for jobs based on a variety of criteria including keyword, location, job type, and salary range. 
+The user interface is built using React, and makes use of pagination to display a large number of job listings. Users can filter their search results based on location, title, salary, and benefits, as well as select whether they are looking for full-time or part-time positions.
+ The design of the application is based on a <a href="https://www.figma.com/file/gAkVx9CdOqnJcCjJ7nVNkw/job-search?node-id=0%3A1"> Figma </a> design and implements a number of user stories, such as the ability to search for jobs with a given keyword, search for jobs with a city name or zip code, select one option from at least 4 pre-defined options, search for full-time jobs only, and see a list of jobs with their logo, company name, location, and posted time.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+When a user clicks on a job, they are directed to a job details page, where they can see job descriptions and information on how to apply. The job details page also includes a button that allows the user to return to the search page. The application uses Javascript, React, and Bootstrap as the main technologies and it is built with TypeScript.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Technologies used in the development of this project include React, RESTful API, JavaScript, Material UI and HTML/CSS, Webpack & Babel.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## How To Use
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<!-- Example: -->
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+
+```bash
+# Clone this repository
+$ git clone https://github.com/your-user-name/your-project-name
+
+# Install dependencies
+$ npm install
+
+# Run the app
+$ npm start
+```
