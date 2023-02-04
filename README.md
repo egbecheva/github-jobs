@@ -42,7 +42,7 @@ A web-based application that utilizes a RESTful API to retrieve remote job listi
 The user interface is built using React, and makes use of pagination to display a large number of job listings. Users can filter their search results based on location, title, salary, and benefits, as well as select whether they are looking for full-time or part-time positions.
  The design of the application is based on a <a href="https://www.figma.com/file/gAkVx9CdOqnJcCjJ7nVNkw/job-search?node-id=0%3A1"> Figma </a> design and implements a number of user stories, such as the ability to search for jobs with a given keyword, search for jobs with a city name or zip code, select one option from at least 4 pre-defined options, search for full-time jobs only, and see a list of jobs with their logo, company name, location, and posted time.
 
-When a user clicks on a job, they are directed to a job details page, where they can see job descriptions and information on how to apply. The job details page also includes a button that allows the user to return to the search page. The application uses Javascript, React, and Bootstrap as the main technologies and it is built with TypeScript.
+When a user clicks on a job, they are directed to a job details page, where they can see job descriptions and information on how to apply. The job details page also includes a button that allows the user to return to the search page. The application uses Javascript, React, and Material UI as the main technologies and it is built with TypeScript.
 
 Technologies used in the development of this project include React, RESTful API, JavaScript, Material UI and HTML/CSS, Webpack & Babel.
 
