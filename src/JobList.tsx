@@ -58,7 +58,8 @@ const JobList: React.FC<{
 
   const fetchJobs = async () => {
     const response = await fetch('https://remotive.com/api/remote-jobs');
-    return response.json();
+    const dataReceived = await response.json();
+    return dataReceived;
   };
   const { data, status } = useQuery(['jobs'], fetchJobs);
   const _DATA = usePagination(
